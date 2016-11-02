@@ -1,4 +1,4 @@
-# Meteor-1.4-Blaze-Templates by Attic-Studio
+# Meteor-1.4-Blaze-Template by Attic-Studio
 
 ## Features
 
@@ -9,10 +9,11 @@
 * MomentJS
 * SimpeSchema/Auto-Form
 * Persisten Client DB for mobile Apps (see /imports/db/persistent-client-db.js)
+* Examples for pages, components, server-api,...
 
-## Features
+## Structure
 
-See the Meteor Guide for the recommended code layout conventions.
+See the [Meteor Guide](http://guide.meteor.com/) for the recommended code layout conventions.
 
 ## How to start the app?
 
