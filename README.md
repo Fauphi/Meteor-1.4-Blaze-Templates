@@ -1,5 +1,7 @@
 # Meteor-1.4-Blaze-Template by Attic-Studio
 
+Basic project for a Meteor App.
+
 ## Features
 
 * Persistent Session
@@ -19,3 +21,8 @@ See the [Meteor Guide](http://guide.meteor.com/) for the recommended code layout
 
 To start the app, run `sh startup.sh` in the root.
 You can also set your environment variables (like MONGO_URL, MAIL_URL,...) in this file.
+
+## Future
+
+* Add optional user account packages
+* Switch from Atmosphere packages to npm packages
