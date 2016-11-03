@@ -2,7 +2,7 @@
 * @Author: philipp
 * @Date:   2016-11-02 16:47:08
 * @Last Modified by:   philipp
-* @Last Modified time: 2016-11-02 17:41:08
+* @Last Modified time: 2016-11-03 15:21:51
 */
 
 'use strict';
@@ -10,11 +10,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { AutoForm } from 'meteor/aldeed:autoform';
 
-export const Blog = new Mongo.Collection('blog');
+export const Blog = new Mongo.Collection('attic-studio-blog');
 
 if(Meteor.isServer) {
-	import './server/publications.js';
+	import './publications-server.js';
 
     Meteor.methods({
     	'blog.create'(data) {
@@ -27,6 +28,23 @@ if(Meteor.isServer) {
     		Blog.remove(id);
     	}
     });
+
+}
+
+if(Meteor.isClient) {
+    AutoForm.addInputType('fileupload', {
+        template: 'fileUpload',
+        valueOut: function () {
+            return this.data('imgBase');
+        }
+    });
+
+    AutoForm.addInputType('quilleditor', {
+        template: 'quillEditor',
+        valueOut: function () {
+            return this.find('.ql-editor').html();
+        }
+    });
 }
 
 Blog.attachSchema(new SimpleSchema({
@@ -35,12 +53,20 @@ Blog.attachSchema(new SimpleSchema({
         label: "Title",
         max: 200
     },
-    creationDate: {
-        type: Date,
-        label: "Created"
+    createdAt: {
+        type: Number,
+        label: "Created",
+        autoValue: function() {
+            if(this.isInsert || this.isUpdate) return new Date().getTime();
+            else this.unset();
+        },
+        autoform: {
+            omit: true
+        }
     },
     published: {
         type: Boolean,
+        optional: true,
         label: "Published",
         autoform: {
             afFieldInput: {
@@ -50,20 +76,21 @@ Blog.attachSchema(new SimpleSchema({
     },
     author: {
         type: String,
+        optional: true,
         label: "Author"
     },  
     titlePhoto: {
         type: String,
-        optional: true,
         label: "Title photo",
         autoform: {
             afFieldInput: {
-                type: 'cloudinary'
+                type: 'fileupload'
             }
         }
     }, 
     preview: {
         type: String,
+        optional: true,
         label: 'Preview',
         autoform: {
             rows: 3
@@ -72,9 +99,10 @@ Blog.attachSchema(new SimpleSchema({
     content: {
         type: String,
         label: "Content",
+        optional: true,
         autoform: {
             afFieldInput: {
-                type: 'quill'
+                type: 'quilleditor'
             }
         }
     }

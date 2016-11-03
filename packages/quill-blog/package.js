@@ -16,23 +16,53 @@ Package.onUse(function (api) {
     'mongo',
     'templating',
     'reactive-var',
-    'trever:quill',
-    'aramk:quill',
+    'momentjs:moment',
+    'kadira:flow-router',
     'aldeed:simple-schema',
     'aldeed:collection2',
-    'aldeed:autoform'
+    'aldeed:autoform',
+    'blaze-html-templates',
+    'kadira:blaze-layout'
+  ], ['client', 'server']);
+
+  api.addFiles([  
+    'admin/blog.html',
+    'admin/blog.css',
+    'admin/blog.js',
+    'admin/edit-entry.html',
+    'admin/edit-entry.css',
+    'admin/edit-entry.js',
+    'admin/fileUploadTmpl.js',
+    'admin/fileUploadTmpl.html',
+    'admin/quillEditorTmpl.js',
+    'admin/quillEditorTmpl.html'
   ], 'client');
 
   api.addFiles([
-    'blog.html',
-    'blog.css',
-    'blog.js',
-    'edit-entry.html',
-    'edit-entry.css',
-    'edit-entry.js',
+    'layout.js',
+    'layout.html',
+    'routes.js'
+  ], 'client');
+
+  api.addFiles([  
+    'client/blog.html',
+    'client/blog.js',
+    'client/blog-entry.html',
+    'client/blog-entry.js'
   ], 'client');
 
   api.addFiles([
-    'blog-server.js',
-  ], 'server');
+    'backend/blog-server.js',
+    'backend/publications-server.js',
+  ], ['server']);
+
+  api.addFiles([
+    'quill/quill.snow.css'
+  ], 'client');
+
+  // api.export('BlogView');
+});
+
+Npm.depends({
+  quill: '1.1.3'
 });
